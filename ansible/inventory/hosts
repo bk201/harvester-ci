@@ -1,0 +1,1 @@
+dell-14 ansible_ssh_host=172.19.1.244 ansible_user='harvester' ansible_python_interpreter='/usr/bin/python3.6'

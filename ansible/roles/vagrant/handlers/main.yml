@@ -1,0 +1,7 @@
+---
+# handlers file for vagrant
+- name: restart libvirtd
+  service:
+    name: libvirtd
+    state: restarted
+    enabled: yes

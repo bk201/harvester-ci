@@ -1,0 +1,38 @@
+---
+# tasks file for vagrant
+- name: Install KVM
+  zypper:
+    name:
+    - kvm_server
+    - kvm_tools
+    type: pattern
+
+- name: Install vagrant
+  package:
+    name:
+    - vagrant
+    - vagrant-libvirt
+
+- name: add users to libvirt group
+  user:
+    name: "{{ item }}"
+    groups:
+      - libvirt
+    append: yes
+  loop: "{{ vagrant_libvirt_group_users }}"
+
+- name: export LIBVIRT DEFAULT URI
+  lineinfile:
+    dest: "/home/{{ item.0 }}/.bashrc"
+    line: "export {{ item.1.key }}={{ item.1.value }}"
+    regexp: '^#?\s*{{ item.1.key }}='
+    state: present
+  with_nested:
+    - "{{ vagrant_libvirt_group_users }}"
+    - - { key: LIBVIRT_DEFAULT_URI,  value: 'qemu:///system' }
+  
+- name: start libvirtd
+  service:
+    name: libvirtd
+    state: started
+    enabled: yes

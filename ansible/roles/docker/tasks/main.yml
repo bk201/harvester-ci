@@ -1,0 +1,19 @@
+---
+# tasks file for docker
+- name: Install docker
+  package:
+    name: docker
+
+- name: add users to docker group
+  user:
+    name: "{{ item }}"
+    groups:
+      - docker
+    append: yes
+  loop: "{{ docker_group_users }}"
+
+- name: start docker
+  service:
+    name: docker
+    state: started
+    enabled: yes

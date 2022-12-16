@@ -1,0 +1,5 @@
+---
+# defaults file for vagrant
+
+# add these users to libvirt group
+vagrant_libvirt_group_users: []

@@ -1,0 +1,35 @@
+---
+# tasks file for common
+- name: Install common packages
+  package:
+    name:
+    - git
+    - ansible
+    - vim
+    - k9s
+
+- name: Install kubectl
+  get_url:
+    url: "https://dl.k8s.io/release/{{ common_kubectl_version  }}/bin/linux/amd64/kubectl"
+    dest: /usr/local/bin/kubectl
+    mode: '0755'
+
+- name: Add authorized_keys
+  authorized_key:
+    user: "{{ common_login_user }}"
+    state: present
+    key: "{{ lookup('file', item) }}"
+  with_fileglob:
+    - public_keys/*
+
+- name: Add CI users
+  user:
+    name: "{{ item }}"
+    generate_ssh_key: yes
+  loop: "{{ common_ci_users }}"
+# - name: Generate ssh keypair for CI users
+#   openssh_keypair:
+#     user: "{{ common_login_user }}"
+#     state: present
+#     key: "{{ lookup('file', item) }}"
+#   loop: "{{ common_ci_users }}"
