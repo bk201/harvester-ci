@@ -7,6 +7,9 @@
     - ansible
     - vim
     - k9s
+    - yq
+    - jq
+    - helm
 
 - name: Install kubectl
   get_url:
