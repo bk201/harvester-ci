@@ -10,6 +10,7 @@
     - yq
     - jq
     - helm
+    - make
 
 - name: Install kubectl
   get_url:
