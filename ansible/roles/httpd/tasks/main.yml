@@ -1,0 +1,31 @@
+---
+- name: Install httpd packages
+  package:
+    name:
+    - nginx
+  notify:
+    - restart httpd
+
+- name: Create artifacts directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    group: nginx
+    mode: '0775'
+  loop:
+    - "/srv/www/htdocs/harvester/rke2"
+    - "/srv/www/htdocs/harvester/artifacts"
+
+- name: add users to nginx group
+  user:
+    name: "{{ item }}"
+    groups:
+      - nginx
+    append: yes
+  loop: "{{ httpd_nginx_group_users }}"
+
+- name: Create scripts
+  copy:
+    src: get-rke2.sh
+    dest: /srv/www/htdocs/harvester/rke2/get-rke2.sh
+    mode: '0755'

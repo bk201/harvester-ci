@@ -1,0 +1,5 @@
+---
+# defaults file for httpd
+
+# add these users to nginx group
+httpd_nginx_group_users: []
