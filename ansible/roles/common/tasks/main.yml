@@ -11,6 +11,9 @@
     - jq
     - helm
     - make
+    - sysstat
+    - gdisk
+    - fio
 
 - name: Install kubectl
   get_url:
