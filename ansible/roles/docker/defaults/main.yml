@@ -3,3 +3,5 @@
 
 # add these users to docker group
 docker_group_users: []
+
+docker_insecure_registries: []

@@ -3,6 +3,8 @@
 - name: Install docker
   package:
     name: docker
+  notify:
+    - restart docker
 
 - name: add users to docker group
   user:
@@ -12,8 +14,10 @@
     append: yes
   loop: "{{ docker_group_users }}"
 
-- name: start docker
-  service:
-    name: docker
-    state: started
-    enabled: yes
+# this is bad, we overwrite the the whole file
+- name: config docker daemon
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+  notify:
+    - restart docker
