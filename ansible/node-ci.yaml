@@ -1,14 +1,18 @@
 
-- hosts: dell-14
+- hosts: hp-175
   become: yes
   roles:
     - role: common
       vars:
         common_login_user: "harvester"
-        common_ci_users: ["harvester", "github", "test"]
+        common_ci_users: ["harvester", "github", "github2", "github3"]
     - role: docker
       vars:
-        docker_group_users: ["harvester", "github"]
+        docker_group_users: ["harvester", "github", "github2", "github3"]
+        docker_insecure_registries: ["172.17.0.1:5000"]
     - role: vagrant
       vars:
-        vagrant_libvirt_group_users: ["harvester", "github"]
+        vagrant_libvirt_group_users: ["harvester", "github", "github2", "github3"]
+    - role: httpd
+      vars:
+        httpd_nginx_group_users: ["harvester", "github", "github2", "github3"]
