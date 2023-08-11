@@ -16,6 +16,12 @@
     - "/srv/www/htdocs/harvester/rke2"
     - "/srv/www/htdocs/harvester/artifacts"
 
+- name: configure httpd
+  copy:
+    src: harvester-ci.conf 
+    dest: /etc/nginx/conf.d/harvester-ci.conf
+  notify: restart httpd
+
 - name: add users to nginx group
   user:
     name: "{{ item }}"
