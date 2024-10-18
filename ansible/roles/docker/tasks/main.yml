@@ -1,23 +1,16 @@
 ---
 # tasks file for docker
-- name: Install docker
-  package:
-    name: docker
-  notify:
-    - restart docker
+- ansible.builtin.include_tasks: _opensuse.yml
+  when: ansible_distribution == "openSUSE Leap"
+
+- ansible.builtin.include_tasks: _ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
 - name: add users to docker group
-  user:
+  ansible.builtin.user:
     name: "{{ item }}"
     groups:
       - docker
     append: yes
   loop: "{{ docker_group_users }}"
-
-# this is bad, we overwrite the the whole file
-- name: config docker daemon
-  template:
-    src: daemon.json.j2
-    dest: /etc/docker/daemon.json
-  notify:
-    - restart docker
+  

@@ -1,0 +1,15 @@
+---
+- name: Install docker
+  ansible.builtin.package:
+    name: docker
+  notify:
+    - restart docker
+
+# this is bad, we overwrite the the whole file
+- name: config docker daemon
+  ansible.builtin.template:
+    src: daemon-opensuse.json.j2
+    dest: /etc/docker/daemon.json
+    backup: true
+  notify:
+    - restart docker
