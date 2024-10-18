@@ -1,38 +1,46 @@
 ---
 - name: Install httpd packages
-  package:
+  ansible.builtin.package:
     name:
     - nginx
   notify:
     - restart httpd
 
+- ansible.builtin.set_fact:
+    httpd_group: "nginx"
+  when: ansible_distribution == "openSUSE Leap"
+
+- ansible.builtin.set_fact:
+    httpd_group: "www-data"
+  when: ansible_distribution == "Ubuntu"
+
 - name: Create artifacts directory
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    group: nginx
+    group: "{{ httpd_group }}"
     mode: '0775'
   loop:
     - "/srv/www/htdocs/harvester/rke2"
     - "/srv/www/htdocs/harvester/artifacts"
     - "/srv/www/htdocs/harvester/workflows"
 
-- name: configure httpd
-  copy:
-    src: harvester-ci.conf 
-    dest: /etc/nginx/conf.d/harvester-ci.conf
-  notify: restart httpd
+- ansible.builtin.include_tasks: _opensuse.yml
+  when: ansible_distribution == "openSUSE Leap"
+
+- ansible.builtin.include_tasks: _ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
 - name: add users to nginx group
-  user:
+  ansible.builtin.user:
     name: "{{ item }}"
     groups:
-      - nginx
+      - "{{ httpd_group }}"
     append: yes
   loop: "{{ httpd_nginx_group_users }}"
 
 - name: Create scripts
-  copy:
+  ansible.builtin.copy:
     src: get-rke2.sh
     dest: /srv/www/htdocs/harvester/rke2/get-rke2.sh
     mode: '0755'

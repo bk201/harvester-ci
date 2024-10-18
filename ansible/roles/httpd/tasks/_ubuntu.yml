@@ -1,0 +1,12 @@
+---
+- name: disable default site
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: restart httpd
+  
+- name: configure harvester ci site 
+  ansible.builtin.copy:
+    src: harvester-ci.conf 
+    dest: /etc/nginx/sites-enabled/harvester-ci.conf
+  notify: restart httpd

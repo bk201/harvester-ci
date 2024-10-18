@@ -1,0 +1,6 @@
+---
+- name: configure httpd
+  ansible.builtin.copy:
+    src: harvester-ci.conf 
+    dest: /etc/nginx/conf.d/harvester-ci.conf
+  notify: restart httpd
