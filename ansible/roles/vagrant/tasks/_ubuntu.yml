@@ -11,3 +11,11 @@
     chmod a+x ./install.bash
     ./install.bash
   when: command_output.rc != 0
+
+- name: Install vagrant-libvirt for ci users
+  ansible.builtin.shell: |
+    if ! vagrant plugin list | grep -q 'vagrant-libvirt'; then
+      vagrant plugin install vagrant-libvirt
+    fi
+  become_user: "{{ item }}"
+  loop: "{{ vagrant_libvirt_group_users }}"
