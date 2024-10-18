@@ -1,22 +1,23 @@
 ---
 # tasks file for common
 - name: Install common packages
-  package:
+  ansible.builtin.package:
     name:
     - git
     - ansible
     - vim
-    - k9s
     - yq
     - jq
-    - helm
     - make
     - sysstat
     - gdisk
     - fio
 
+- ansible.builtin.include_tasks: _k9s.yml
+- ansible.builtin.include_tasks: _helm.yml
+  
 - name: Install kubectl
-  get_url:
+  ansible.builtin.get_url:
     url: "https://dl.k8s.io/release/{{ common_kubectl_version  }}/bin/linux/amd64/kubectl"
     dest: /usr/local/bin/kubectl
     mode: '0755'
@@ -30,7 +31,7 @@
     - public_keys/*
 
 - name: Add CI users
-  user:
+  ansible.builtin.user:
     name: "{{ item }}"
     generate_ssh_key: yes
   loop: "{{ common_ci_users }}"

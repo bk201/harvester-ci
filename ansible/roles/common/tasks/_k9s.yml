@@ -1,0 +1,16 @@
+---
+- name: Install k9s
+  ansible.builtin.shell: |
+    set -e
+    tmp_dir="/tmp/harvester-ci/k9s-tmp"
+    mkdir -p $tmp_dir
+    pushd $tmp_dir
+    curl -sL https://github.com/derailed/k9s/releases/latest/download/k9s_Linux_amd64.tar.gz -o k9s.tar.gz
+    tar xzvf k9s.tar.gz
+    cp k9s /usr/local/bin/
+    chmod +x /usr/local/bin/k9s
+    popd
+    rm -rf $tmp_dir
+  args:
+    executable: /bin/bash
+    creates: /usr/local/bin/k9s
