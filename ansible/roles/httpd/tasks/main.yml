@@ -15,6 +15,7 @@
   loop:
     - "/srv/www/htdocs/harvester/rke2"
     - "/srv/www/htdocs/harvester/artifacts"
+    - "/srv/www/htdocs/harvester/workflows"
 
 - name: configure httpd
   copy:
