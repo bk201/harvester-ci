@@ -1,0 +1,13 @@
+---
+- name: check if vagrant-libvirt is installed
+  ansible.builtin.shell: "vagrant plugin list | grep 'vagrant-libvirt'"
+  register: command_output
+  ignore_errors: true
+
+- name: Install vagrant-libvirt with upstream script
+  ansible.builtin.shell: |
+    set -e
+    curl -O https://raw.githubusercontent.com/vagrant-libvirt/vagrant-libvirt-qa/main/scripts/install.bash
+    chmod a+x ./install.bash
+    ./install.bash
+  when: command_output.rc != 0

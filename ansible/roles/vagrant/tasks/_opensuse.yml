@@ -1,0 +1,19 @@
+---
+- name: Install KVM
+  zypper:
+    name:
+    - kvm_server
+    - kvm_tools
+    type: pattern
+
+- name: Install vagrant
+  package:
+    name:
+    - vagrant
+    - vagrant-libvirt
+
+- name: start libvirtd
+  service:
+    name: libvirtd
+    state: started
+    enabled: yes

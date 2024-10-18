@@ -1,17 +1,10 @@
 ---
-# tasks file for vagrant
-- name: Install KVM
-  zypper:
-    name:
-    - kvm_server
-    - kvm_tools
-    type: pattern
+- ansible.builtin.include_tasks: _opensuse.yml
+  when: ansible_distribution == "openSUSE Leap"
 
-- name: Install vagrant
-  package:
-    name:
-    - vagrant
-    - vagrant-libvirt
+- ansible.builtin.include_tasks: _ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+
 
 - name: add users to libvirt group
   user:
@@ -30,9 +23,3 @@
   with_nested:
     - "{{ vagrant_libvirt_group_users }}"
     - - { key: LIBVIRT_DEFAULT_URI,  value: 'qemu:///system' }
-  
-- name: start libvirtd
-  service:
-    name: libvirtd
-    state: started
-    enabled: yes
