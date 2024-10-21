@@ -22,6 +22,13 @@
     dest: /usr/local/bin/kubectl
     mode: '0755'
 
+- name: Add CI users
+  ansible.builtin.user:
+    name: "{{ item }}"
+    generate_ssh_key: yes
+    shell: /bin/bash
+  loop: "{{ common_ci_users }}"
+
 - name: Add authorized_keys
   authorized_key:
     user: "{{ common_login_user }}"
@@ -29,12 +36,6 @@
     key: "{{ lookup('file', item) }}"
   with_fileglob:
     - public_keys/*
-
-- name: Add CI users
-  ansible.builtin.user:
-    name: "{{ item }}"
-    generate_ssh_key: yes
-  loop: "{{ common_ci_users }}"
 # - name: Generate ssh keypair for CI users
 #   openssh_keypair:
 #     user: "{{ common_login_user }}"
