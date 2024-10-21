@@ -14,3 +14,11 @@
     append: yes
   loop: "{{ docker_group_users }}"
   
+- name: Create a local registry
+  docker_container:
+    name: registry
+    image: registry:2
+    state: started
+    ports:
+      - "5000:5000"
+  
