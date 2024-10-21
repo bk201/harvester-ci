@@ -24,6 +24,7 @@
     - "/srv/www/htdocs/harvester/rke2"
     - "/srv/www/htdocs/harvester/artifacts"
     - "/srv/www/htdocs/harvester/workflows"
+    - "/srv/www/htdocs/harvester/images"
 
 - ansible.builtin.include_tasks: _opensuse.yml
   when: ansible_distribution == "openSUSE Leap"
@@ -44,3 +45,10 @@
     src: get-rke2.sh
     dest: /srv/www/htdocs/harvester/rke2/get-rke2.sh
     mode: '0755'
+
+- name: Download and serve images
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "/srv/www/htdocs/harvester/images"
+    mode: '0664'
+  loop: "{{ httpd_default_images }}"

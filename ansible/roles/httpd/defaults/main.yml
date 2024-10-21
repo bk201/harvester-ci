@@ -3,3 +3,7 @@
 
 # add these users to nginx group
 httpd_nginx_group_users: []
+
+httpd_default_images:
+- "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64-disk-kvm.img"
+- "https://download.opensuse.org/repositories/Cloud:/Images:/Leap_15.5/images/openSUSE-Leap-15.5.x86_64-NoCloud.qcow2"
