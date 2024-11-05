@@ -48,7 +48,7 @@
 
 - name: Download and serve images
   ansible.builtin.get_url:
-    url: "{{ item }}"
-    dest: "/srv/www/htdocs/harvester/images"
+    url: "{{ item.url }}"
+    dest: "/srv/www/htdocs/harvester/images/{{ item.filename }}"
     mode: '0664'
   loop: "{{ httpd_default_images }}"
