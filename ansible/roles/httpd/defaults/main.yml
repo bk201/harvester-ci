@@ -4,6 +4,12 @@
 # add these users to nginx group
 httpd_nginx_group_users: []
 
+httpd_ci_scripts:
+- file: get-rke2.sh
+  dest: /srv/www/htdocs/harvester/rke2/get-rke2.sh
+- file: get-harvester.sh
+  dest: /srv/www/htdocs/harvester/artifacts/get-harvester.sh
+
 httpd_default_images:
 - url: "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64-disk-kvm.img"
   filename: "jammy-server-cloudimg-amd64-disk-kvm.img"

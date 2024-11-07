@@ -42,9 +42,10 @@
 
 - name: Create scripts
   ansible.builtin.copy:
-    src: get-rke2.sh
-    dest: /srv/www/htdocs/harvester/rke2/get-rke2.sh
+    src: "{{ item.file }}"
+    dest: "{{ item.dest }}"
     mode: '0755'
+  loop: "{{ httpd_ci_scripts }}"
 
 - name: Download and serve images
   ansible.builtin.get_url:
