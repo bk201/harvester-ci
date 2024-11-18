@@ -42,3 +42,9 @@
 #     state: present
 #     key: "{{ lookup('file', item) }}"
 #   loop: "{{ common_ci_users }}"
+
+- name: add ssh client config
+  ansible.builtin.copy:
+    src: "harvester-ci.conf"
+    dest: "/etc/ssh/ssh_config.d/harvester-ci.conf"
+    mode: '0644'
