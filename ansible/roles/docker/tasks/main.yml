@@ -13,6 +13,8 @@
       - docker
     append: yes
   loop: "{{ docker_group_users }}"
+
+- meta: flush_handlers
   
 - name: Create a local registry
   docker_container:
