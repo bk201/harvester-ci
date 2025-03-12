@@ -6,6 +6,13 @@
     - kvm_tools
     type: pattern
 
+# just for https://github.com/harvester/ipxe-examples/blob/033930ea1b9ad2f2d64801fa42716d43f8899df0/vagrant-pxe-harvester/Vagrantfile#L77
+- name: create UEFI firmware file
+  file:
+    src: /usr/share/qemu/ovmf-x86_64.bin
+    dest: /usr/share/qemu/OVMF.fd
+    state: link
+
 - name: Install vagrant
   package:
     name:
