@@ -3,3 +3,6 @@
 
 # add these users to libvirt group
 vagrant_libvirt_group_users: []
+
+# These users can run some sudo commands without passwords
+vagrant_sudo_users: []

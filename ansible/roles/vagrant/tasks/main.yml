@@ -23,3 +23,17 @@
   with_nested:
     - "{{ vagrant_libvirt_group_users }}"
     - - { key: LIBVIRT_DEFAULT_URI,  value: 'qemu:///system' }
+
+- name: allow run sudo iptables without password
+  community.general.sudoers:
+    name: "{{ item }}"
+    state: present
+    user: "{{ item }}"
+    commands: /usr/sbin/iptables
+  loop: "{{ vagrant_sudo_users }}"
+
+- name: add the script to enable libvirt network route
+  ansible.builtin.copy:
+    src: enable-libvirt-network-route.sh 
+    dest: /usr/sbin/enable-libvirt-network-route.sh
+    mode: '0755'
