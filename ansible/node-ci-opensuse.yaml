@@ -13,6 +13,7 @@
     - role: vagrant
       vars:
         vagrant_libvirt_group_users: ["opensuse", "github", "github2", "github3"]
+        vagrant_sudo_users: ["github", "github2", "github3"]
     - role: httpd
       vars:
         httpd_nginx_group_users: ["harvester", "github", "github2", "github3"]
