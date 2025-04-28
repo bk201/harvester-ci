@@ -21,6 +21,13 @@ if [[ $bridge != virbr* ]]; then
     exit 0
 fi
 
+if [ "$(id -u)" -ne 0 ]; then
+	SUDO="sudo"
+else
+	SUDO=""
+fi
+
 set -x
-iptables -D LIBVIRT_FWI -o $bridge -j REJECT --reject-with icmp-port-unreachable || true
-iptables -D LIBVIRT_FWO -i $bridge -j REJECT --reject-with icmp-port-unreachable || true
+
+"$SUDO" iptables -D LIBVIRT_FWI -o $bridge -j REJECT --reject-with icmp-port-unreachable || true
+"$SUDO" iptables -D LIBVIRT_FWO -i $bridge -j REJECT --reject-with icmp-port-unreachable || true
