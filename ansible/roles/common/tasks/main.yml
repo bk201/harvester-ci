@@ -11,6 +11,8 @@
     - sysstat
     - gdisk
     - fio
+    - tmux
+    - xfsprogs
 
 - ansible.builtin.include_tasks: _yq.yml
 - ansible.builtin.include_tasks: _k9s.yml
