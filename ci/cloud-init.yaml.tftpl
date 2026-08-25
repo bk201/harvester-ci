@@ -1,0 +1,13 @@
+#cloud-config
+user: ${vm_user}
+password: ${vm_password}
+chpasswd:
+  expire: false
+ssh_pwauth: true
+package_update: true
+packages:
+  - python311
+  - python311-requests
+ssh_authorized_keys:
+  - >-
+    ${pubkey}

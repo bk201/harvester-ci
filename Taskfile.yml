@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: '3'
+
+
+env:
+  TF_CLI_CONFIG_FILE: "{{.ROOT_DIR}}/.terraformrc"
+
+tasks:
+  default:
+    cmds:
+      - task --list
+    silent: true
+  ci-init-pubkey:
+    desc: "Initialize the SSH public key for the CI VM"
+    cmds:
+      - ./scripts/init-ci-ssh-key.sh
+  ci-clean-pubkey:
+    desc: "Clean up the SSH public key for the CI VM"
+    cmds:
+      - ./scripts/clean-ci-ssh-key.sh
+  ci-init:
+    desc: "Initialize the Terraform working directory for the CI Infrastructure"
+    cmds:
+      - terraform -chdir=ci init
+  ci-plan:
+    desc: "Plan the CI Infrastructure"
+    deps:
+      - ci-init-pubkey
+      - ci-init
+    cmds:
+      - terraform -chdir=ci plan {{ .CLI_ARGS }}
+  ci-up:
+    desc: "Build the CI Infrastructure"
+    deps:
+      - ci-init-pubkey
+      - ci-init
+    cmds:
+      - terraform -chdir=ci apply --auto-approve
+      - ./scripts/wait-for-cloud-init.sh
+  ci-clean:
+    desc: "Destroy the CI Infrastructure"
+    cmds:
+      - terraform -chdir=ci destroy {{ .CLI_ARGS }}
+  ssh:
+    desc: "SSH into the ci VM"
+    cmds:
+      - ./scripts/ssh-ci-vm.sh
+  ci-provision:
+    desc: "Run the ansible playbook against the CI VM"
+    deps:
+      - ci-up
+    cmds:
+      - ./scripts/run-ci-ansible.sh {{ .CLI_ARGS }}

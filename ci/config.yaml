@@ -1,0 +1,16 @@
+namespace: harvester-dev
+
+vm_name: harvester-ci-vm
+vm_count: 1
+vm_cpu: 2
+vm_memory_in_gib: 4
+vm_disk_size: 20
+
+image_name: harvester-ci-opensuse-leap
+image_url: http://10.115.1.6/iso/harvester_vm_images_for_tests/openSUSE-Leap-15.6.x86_64-NoCloud.qcow2
+
+ssh_pubkey_name: harvester-ci-ssh-key
+vm_user_name: opensuse
+vm_password: changeme
+
+network_name: vlan2017
