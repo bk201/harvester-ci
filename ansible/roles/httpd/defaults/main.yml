@@ -11,7 +11,7 @@ httpd_ci_scripts:
   dest: /srv/www/htdocs/harvester/artifacts/get-harvester.sh
 
 httpd_default_images:
-- url: "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64-disk-kvm.img"
-  filename: "jammy-server-cloudimg-amd64-disk-kvm.img"
+- url: "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img"
+  filename: "noble-server-cloudimg-amd64.img"
 - url: "https://download.opensuse.org/repositories/Cloud:/Images:/Leap_15.5/images/openSUSE-Leap-15.5.x86_64-NoCloud.qcow2"
   filename: "openSUSE-Leap-15.5.x86_64-NoCloud.qcow2"
