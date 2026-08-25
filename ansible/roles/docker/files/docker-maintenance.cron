@@ -1,0 +1,2 @@
+0 23 * * * root /usr/local/sbin/prune-images.sh >> /tmp/crond-prune-images.log 2>&1
+45 4 * * 1 root /usr/local/sbin/prune-more.sh >> /tmp/crond-prune-more.log 2>&1

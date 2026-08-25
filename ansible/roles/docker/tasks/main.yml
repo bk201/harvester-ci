@@ -24,4 +24,6 @@
     restart_policy: unless-stopped
     ports:
       - "5000:5000"
+
+- ansible.builtin.include_tasks: _maintenance.yml
   

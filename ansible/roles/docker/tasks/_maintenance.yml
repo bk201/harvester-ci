@@ -1,0 +1,20 @@
+---
+# docker maintenance cron jobs
+- name: Install docker maintenance scripts
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/usr/local/sbin/{{ item }}"
+    owner: root
+    group: root
+    mode: '0755'
+  loop:
+    - prune-images.sh
+    - prune-more.sh
+
+- name: Install docker maintenance cron file
+  ansible.builtin.copy:
+    src: docker-maintenance.cron
+    dest: /etc/cron.d/docker-maintenance
+    owner: root
+    group: root
+    mode: '0644'
