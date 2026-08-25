@@ -19,7 +19,7 @@
 - name: Create a local registry
   docker_container:
     name: registry
-    image: registry:2
+    image: registry:3
     state: started
     restart_policy: unless-stopped
     ports:
