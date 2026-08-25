@@ -1,15 +1,8 @@
 ---
-- name: Install helm
-  ansible.builtin.shell: |
-    set -e
-    tmp_dir="/tmp/harvester-ci/helm-tmp"
-    mkdir -p $tmp_dir
-    pushd $tmp_dir
-    curl -sL https://get.helm.sh/helm-v4.2.0-linux-amd64.tar.gz -o helm.tar.gz
-    tar xzvf helm.tar.gz
-    cp linux-amd64/helm /usr/local/bin/helm
-    popd
-    rm -rf $tmp_dir
+- name: Install helm (latest v3)
+  ansible.builtin.shell: curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
   args:
     executable: /bin/bash
     creates: /usr/local/bin/helm
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"
